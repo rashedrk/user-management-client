@@ -5,9 +5,9 @@ function App() {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     fetch('http://localhost:5000/users')
-    .then(res => res.json())
-    .then(data => setUsers(data))
-  },[]);
+      .then(res => res.json())
+      .then(data => setUsers(data))
+  }, []);
 
   const handleAddUser = event => {
     event.preventDefault();
@@ -15,15 +15,20 @@ function App() {
     const name = form.name.value;
     const email = form.email.value;
 
-    const user = {name, email};
+    const user = { name, email };
 
     fetch('http://localhost:5000/users', {
       method: 'POST',
       headers: {
-        'content-type' : 'application/json'
+        'content-type': 'application/json'
       },
       body: JSON.stringify(user)
     })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        form.reset();
+      })
   }
   return (
     <>
